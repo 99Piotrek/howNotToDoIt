@@ -1,8 +1,4 @@
-#if defined(UNICODE) && !defined(_UNICODE)
-#define _UNICODE
-#elif defined(_UNICODE) && !defined(UNICODE)
-#define UNICODE
-#endif
+
 
 #include <tchar.h>
 #include <windows.h>
@@ -14,11 +10,10 @@ using namespace std;
 /*  Declare Windows procedure  */
 LRESULT CALLBACK WindowProcedure (HWND, UINT, WPARAM, LPARAM);
 
-HWND textstatic,texteditz1,texteditz2,textedit2,buttoncalculate,button2;
+HWND textstatic,texteditz1,buttoncalculate;
 
 /*  Make the class name into a global variable  */
-string inputZ1,inputZ2;
-char *cinputZ1 = &inputZ1[0u];
+
 TCHAR szClassName[ ] = _T("CodeBlocksWindowsApp");
 
 int WINAPI WinMain (HINSTANCE hThisInstance,
@@ -93,15 +88,15 @@ switch (message)                  /* handle the messages */
 {
     case WM_CREATE:
     texteditz1 = CreateWindow ("EDIT","",
-                               WS_VISIBLE | WS_CHILD,
-                               100,80,45,14,
+                               WS_VISIBLE | WS_CHILD | WS_BORDER,
+                               30,50,45,20,
                                hwnd, (HMENU) 4,NULL,NULL);
 
 
     textstatic = CreateWindow ("STATIC",
-                                "Enter a value",
-                                WS_VISIBLE | WS_CHILD,
-                                30,30,300,15,
+                                "Enter a value: ",
+                                WS_VISIBLE | WS_CHILD | WS_BORDER,
+                                30,30,150,20,
                                 hwnd, NULL, NULL, NULL);
 
 
@@ -130,6 +125,11 @@ switch (message)                  /* handle the messages */
                 for(int i=0;i<len-1;i++)
                 {
                     //std::cout<<text[i]-48;
+                    if(text[i]-'0'<0 ||text[i]-'0'>9)
+                    {
+                        ::MessageBox(hwnd,"Not a number entered!","Error",MB_ICONWARNING);
+                        return 0;
+                    }
                     value=value+(text[i]-'0')*pow(10,len-2-i);
                 }
                 if((len-1)%2==1)value++;
@@ -137,15 +137,15 @@ switch (message)                  /* handle the messages */
 
                 if(value>100)
                 {
-                    ::MessageBox(hwnd, "Value is too big", "Button",MB_OK);
+                    ::MessageBox(hwnd, "Value is too big", "Message",MB_OK);
                 }
                 else if(value==100)
                 {
-                    ::MessageBox(hwnd, "Value is just right", "Button",MB_OK);
+                    ::MessageBox(hwnd, "Value is just right", "Message",MB_OK);
                 }
                 else
                 {
-                    ::MessageBox(hwnd, "Value is too small", "Button",MB_OK);
+                    ::MessageBox(hwnd, "Value is too small", "Message",MB_OK);
                 }
 
                 }
