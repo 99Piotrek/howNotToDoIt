@@ -100,8 +100,6 @@ switch (message)                  /* handle the messages */
                                 hwnd, NULL, NULL, NULL);
 
 
-
-
     buttoncalculate = CreateWindow ("BUTTON",
                                     "Check",
                                     WS_VISIBLE | WS_CHILD,
@@ -137,9 +135,9 @@ switch (message)                  /* handle the messages */
                         ::MessageBox(hwnd,"Not a number entered!","Error",MB_ICONWARNING);
                         return 0;
                     }
-                    value=value+(text[i]-'0')*pow(10,len-2-i);
+                    value=value*10+(text[i]-'0');
                 }
-                if((len-1)%2==1)value++;
+                //if((len-1)%2==1)value++;
                 //std::cout<<" "<<value;
 
                 if(value>100)
