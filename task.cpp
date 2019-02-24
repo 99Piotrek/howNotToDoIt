@@ -122,6 +122,13 @@ switch (message)                  /* handle the messages */
 
                 GetWindowTextW(texteditz1, text, len);
                 int value=0;
+
+                if(len==1)
+                {
+                    ::MessageBox(hwnd,"You didn't enter anything!","Error",MB_ICONWARNING);
+                    return 0;
+                }
+
                 for(int i=0;i<len-1;i++)
                 {
                     //std::cout<<text[i]-48;
